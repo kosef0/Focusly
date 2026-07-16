@@ -16,6 +16,7 @@
   text-align: left;
   position: relative;
   overflow: hidden;
+  min-width: 0;
 }
 
 .tasks-container:hover {
@@ -272,4 +273,105 @@
   0% { transform: scale(1); }
   50% { transform: scale(1.2); }
   100% { transform: scale(1); }
+}
+
+/* ---------- Light Mode Task Readability ---------- */
+[data-theme="light"] .tasks-header__title {
+  color: #111827;
+}
+
+[data-theme="light"] .tasks-input {
+  color: #111827;
+  background: rgba(0, 0, 0, 0.03);
+  border-color: rgba(0, 0, 0, 0.15);
+}
+
+[data-theme="light"] .tasks-input::placeholder {
+  color: #9ca3af;
+}
+
+[data-theme="light"] .task-item__text {
+  color: #111827;
+}
+
+[data-theme="light"] .task-item--completed .task-item__text {
+  color: #9ca3af;
+}
+
+[data-theme="light"] .task-empty {
+  color: #9ca3af;
+}
+
+[data-theme="light"] .tasks-count {
+  color: hsl(var(--hue-primary), 70%, 40%);
+  background: hsla(var(--hue-primary), 70%, 45%, 0.08);
+  border-color: hsla(var(--hue-primary), 70%, 45%, 0.15);
+}
+
+/* ---------- Tasks Mobile Responsive ---------- */
+@media (max-width: 600px) {
+  .tasks-container {
+    padding: var(--space-md);
+    border-radius: var(--radius-lg);
+  }
+
+  .tasks-header__title {
+    font-size: 1.1rem;
+  }
+
+  .tasks-input {
+    height: 38px;
+    font-size: 0.85rem;
+  }
+
+  .tasks-add-btn {
+    min-width: 60px !important;
+    width: 60px;
+    height: 38px !important;
+    font-size: 1rem !important;
+  }
+
+  .tasks-list {
+    max-height: 220px;
+  }
+
+  .task-item {
+    padding: 6px var(--space-sm);
+    min-height: 40px;
+  }
+
+  .task-item__text {
+    font-size: 0.85rem;
+  }
+
+  .task-item__checkbox {
+    width: 18px;
+    height: 18px;
+  }
+
+  .task-item__content {
+    gap: var(--space-sm);
+  }
+}
+
+@media (max-width: 400px) {
+  .tasks-container {
+    padding: var(--space-sm) var(--space-md);
+  }
+
+  .tasks-form {
+    gap: 6px;
+  }
+
+  .tasks-input {
+    height: 36px;
+    font-size: 0.8rem;
+    padding: 0 var(--space-sm);
+  }
+
+  .tasks-add-btn {
+    min-width: 50px !important;
+    width: 50px;
+    height: 36px !important;
+  }
 }

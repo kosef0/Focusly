@@ -85,27 +85,35 @@
 
 /* ---------- Light Theme ---------- */
 [data-theme="light"] {
-  --bg-base: #f4f6fb;
-  --bg-surface: rgba(255, 255, 255, 0.9);
-  --bg-surface-hover: rgba(240, 243, 250, 0.95);
-  --bg-glass: rgba(0, 0, 0, 0.03);
-  --bg-glass-strong: rgba(0, 0, 0, 0.06);
-  --bg-overlay: rgba(0, 0, 0, 0.4);
+  --bg-base: #f0f2fa;
+  --bg-surface: rgba(255, 255, 255, 0.92);
+  --bg-surface-hover: rgba(245, 247, 255, 0.96);
+  --bg-glass: rgba(0, 0, 0, 0.04);
+  --bg-glass-strong: rgba(0, 0, 0, 0.08);
+  --bg-overlay: rgba(0, 0, 0, 0.45);
 
-  --text-primary: #1a1d2e;
-  --text-secondary: rgba(26, 29, 46, 0.6);
-  --text-tertiary: rgba(26, 29, 46, 0.35);
+  /* High-contrast text for light mode — ensures full readability */
+  --text-primary: #111827;
+  --text-secondary: #4b5563;
+  --text-tertiary: #6b7280;
   --text-inverse: #f0f2f8;
 
-  --border-subtle: rgba(0, 0, 0, 0.05);
-  --border-medium: rgba(0, 0, 0, 0.08);
-  --border-strong: rgba(0, 0, 0, 0.14);
+  --border-subtle: rgba(0, 0, 0, 0.07);
+  --border-medium: rgba(0, 0, 0, 0.12);
+  --border-strong: rgba(0, 0, 0, 0.2);
 
-  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
-  --shadow-md: 0 8px 32px rgba(0, 0, 0, 0.1);
-  --shadow-lg: 0 16px 64px rgba(0, 0, 0, 0.14);
-  --shadow-glow: 0 0 40px hsla(var(--hue-primary), 80%, 55%, 0.12);
-  --shadow-glow-strong: 0 0 80px hsla(var(--hue-primary), 80%, 55%, 0.2);
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 8px 32px rgba(0, 0, 0, 0.12);
+  --shadow-lg: 0 16px 64px rgba(0, 0, 0, 0.16);
+  --shadow-glow: 0 0 30px hsla(var(--hue-primary), 70%, 45%, 0.15);
+  --shadow-glow-strong: 0 0 60px hsla(var(--hue-primary), 70%, 45%, 0.25);
+
+  /* Slightly darker primary colors for better contrast on light bg */
+  --color-primary: hsl(var(--hue-primary), 75%, 45%);
+  --color-primary-light: hsl(var(--hue-primary), 75%, 50%);
+  --color-primary-dark: hsl(var(--hue-primary), 75%, 35%);
+  --color-accent: hsl(var(--hue-accent), 80%, 42%);
+  --color-accent-light: hsl(var(--hue-accent), 80%, 50%);
 }
 
 /* ---------- Reset & Base ---------- */
@@ -143,6 +151,11 @@ body {
   transition: background var(--transition-slow);
 }
 
+/* Light mode: ensure background-effects base is light so orbs don't create dark wash */
+[data-theme="light"] .background-effects {
+  background: var(--bg-base);
+}
+
 /* Base states for subcomponents */
 .bg-aurora-orbs,
 .bg-cyber-grid-container,
@@ -170,6 +183,15 @@ body {
   filter: blur(120px);
   opacity: 0.15;
   animation: orbFloat 20s ease-in-out infinite;
+}
+
+[data-theme="light"] .bg-orb {
+  opacity: 0.06;
+  filter: blur(180px);
+}
+
+[data-theme="light"] .bg-orb--3 {
+  opacity: 0.04;
 }
 
 .bg-orb--1 {
@@ -283,9 +305,9 @@ body {
 }
 
 [data-theme="light"][data-bg="sunset"] {
-  background: radial-gradient(circle at 10% 10%, rgba(124, 58, 237, 0.12) 0%, transparent 60%),
-              radial-gradient(circle at 90% 90%, rgba(249, 115, 22, 0.2) 0%, rgba(225, 29, 72, 0.12) 35%, transparent 75%),
-              linear-gradient(to bottom, #fcf7fa, #faf0f4, #e6e9f5) !important;
+  background: radial-gradient(circle at 10% 10%, rgba(124, 58, 237, 0.08) 0%, transparent 60%),
+              radial-gradient(circle at 90% 90%, rgba(249, 115, 22, 0.12) 0%, rgba(225, 29, 72, 0.08) 35%, transparent 75%),
+              linear-gradient(to bottom, #fdf8fa, #faf2f5, #f0f0fa) !important;
 }
 
 /* Cyberpunk Grid Background */
@@ -370,7 +392,11 @@ body {
 }
 
 [data-theme="light"][data-bg="forest"] {
-  background: linear-gradient(135deg, #f0fdf4, #e8f5ec, #dcfce7) !important;
+  background: linear-gradient(135deg, #f2fcf5, #ebf7ee, #e4f5e8) !important;
+}
+
+[data-theme="light"][data-bg="forest"] .bg-forest-ray {
+  background: linear-gradient(to bottom, rgba(16, 185, 129, 0.06), transparent);
 }
 
 .bg-forest-container {
@@ -409,7 +435,38 @@ body {
 }
 
 [data-theme="light"][data-bg="studio"] {
-  background: linear-gradient(135deg, #f2f4fa, #e9ebf2) !important;
+  background: linear-gradient(135deg, #f5f6fc, #eceef6) !important;
+}
+
+/* Light theme: nebula clouds softer to not darken text area */
+[data-theme="light"] .bg-nebula-cloud {
+  opacity: 0.07;
+  filter: blur(180px);
+}
+
+[data-theme="light"] .bg-stars {
+  display: none;
+}
+
+/* Light theme: grid lines */
+[data-theme="light"] .bg-grid {
+  opacity: 0.2;
+}
+
+/* Light theme: cyber grid softer */
+[data-theme="light"] .bg-cyber-grid {
+  background-image: 
+    linear-gradient(to right, rgba(14, 165, 233, 0.1) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(14, 165, 233, 0.1) 1px, transparent 1px);
+}
+
+/* Rain/Sakura canvas visibility in light mode */
+[data-theme="light"][data-bg="rain"] .bg-canvas {
+  opacity: 0.4;
+}
+
+[data-theme="light"][data-bg="sakura"] .bg-canvas {
+  opacity: 0.7;
 }
 
 /* ---------- App Container ---------- */
@@ -420,5 +477,6 @@ body {
   flex-direction: column;
   align-items: center;
   min-height: 100vh;
+  min-height: 100dvh;
   padding: var(--space-lg) var(--space-md);
 }
