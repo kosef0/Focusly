@@ -1,0 +1,424 @@
+/* ============================================
+   FOCUSLY — CSS Custom Variables & Base Resets
+   ============================================ */
+
+/* ---------- Google Fonts ---------- */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap');
+
+/* ---------- CSS Custom Properties (Theme Tokens) ---------- */
+:root {
+  /* Color palette — Ocean (Default) */
+  --hue-primary: 210;
+  --hue-accent: 190;
+
+  --color-primary: hsl(var(--hue-primary), 80%, 55%);
+  --color-primary-light: hsl(var(--hue-primary), 80%, 65%);
+  --color-primary-dark: hsl(var(--hue-primary), 80%, 40%);
+  --color-accent: hsl(var(--hue-accent), 85%, 55%);
+  --color-accent-light: hsl(var(--hue-accent), 85%, 70%);
+
+  /* Background */
+  --bg-base: #0a0e1a;
+  --bg-surface: rgba(15, 20, 40, 0.85);
+  --bg-surface-hover: rgba(25, 35, 65, 0.9);
+  --bg-glass: rgba(255, 255, 255, 0.04);
+  --bg-glass-strong: rgba(255, 255, 255, 0.08);
+  --bg-overlay: rgba(0, 0, 0, 0.6);
+
+  /* Text */
+  --text-primary: #f0f2f8;
+  --text-secondary: rgba(240, 242, 248, 0.65);
+  --text-tertiary: rgba(240, 242, 248, 0.4);
+  --text-inverse: #0a0e1a;
+
+  /* Border */
+  --border-subtle: rgba(255, 255, 255, 0.06);
+  --border-medium: rgba(255, 255, 255, 0.1);
+  --border-strong: rgba(255, 255, 255, 0.18);
+
+  /* Shadows */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 8px 32px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 16px 64px rgba(0, 0, 0, 0.5);
+  --shadow-glow: 0 0 40px hsla(var(--hue-primary), 80%, 55%, 0.2);
+  --shadow-glow-strong: 0 0 80px hsla(var(--hue-primary), 80%, 55%, 0.35);
+
+  /* Typography */
+  --font-ui: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --font-display: 'Outfit', 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
+
+  /* Spacing */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+  --space-3xl: 64px;
+
+  /* Radius */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
+
+  /* Transitions */
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-base: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 400ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-spring: 500ms cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* Timer */
+  --timer-size: 320px;
+  --timer-ring-width: 6px;
+  --timer-track-width: 3px;
+
+
+  /* Z-index scale */
+  --z-base: 1;
+  --z-dropdown: 100;
+  --z-modal: 1000;
+  --z-toast: 2000;
+}
+
+/* ---------- Light Theme ---------- */
+[data-theme="light"] {
+  --bg-base: #f4f6fb;
+  --bg-surface: rgba(255, 255, 255, 0.9);
+  --bg-surface-hover: rgba(240, 243, 250, 0.95);
+  --bg-glass: rgba(0, 0, 0, 0.03);
+  --bg-glass-strong: rgba(0, 0, 0, 0.06);
+  --bg-overlay: rgba(0, 0, 0, 0.4);
+
+  --text-primary: #1a1d2e;
+  --text-secondary: rgba(26, 29, 46, 0.6);
+  --text-tertiary: rgba(26, 29, 46, 0.35);
+  --text-inverse: #f0f2f8;
+
+  --border-subtle: rgba(0, 0, 0, 0.05);
+  --border-medium: rgba(0, 0, 0, 0.08);
+  --border-strong: rgba(0, 0, 0, 0.14);
+
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 8px 32px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 16px 64px rgba(0, 0, 0, 0.14);
+  --shadow-glow: 0 0 40px hsla(var(--hue-primary), 80%, 55%, 0.12);
+  --shadow-glow-strong: 0 0 80px hsla(var(--hue-primary), 80%, 55%, 0.2);
+}
+
+/* ---------- Reset & Base ---------- */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-ui);
+  background: var(--bg-base);
+  color: var(--text-primary);
+  min-height: 100vh;
+  overflow-x: hidden;
+  transition: background var(--transition-slow), color var(--transition-slow);
+}
+
+/* ---------- Animated & Customizable Backgrounds ---------- */
+.background-effects {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+  transition: background var(--transition-slow);
+}
+
+/* Base states for subcomponents */
+.bg-aurora-orbs,
+.bg-cyber-grid-container,
+.bg-nebula-clouds,
+.bg-forest-container,
+.bg-canvas,
+.bg-grid {
+  display: none;
+  opacity: 0;
+  position: absolute;
+  inset: 0;
+  transition: opacity 1.5s ease-in-out;
+}
+
+/* Aurora Background (Default) */
+[data-bg="aurora"] .bg-aurora-orbs,
+[data-bg="aurora"] .bg-grid {
+  display: block;
+  opacity: 1;
+}
+
+.bg-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.15;
+  animation: orbFloat 20s ease-in-out infinite;
+}
+
+.bg-orb--1 {
+  width: 600px;
+  height: 600px;
+  background: var(--color-primary);
+  top: -15%;
+  left: -10%;
+  animation-duration: 25s;
+}
+
+.bg-orb--2 {
+  width: 500px;
+  height: 500px;
+  background: var(--color-accent);
+  bottom: -20%;
+  right: -10%;
+  animation-duration: 30s;
+  animation-delay: -5s;
+}
+
+.bg-orb--3 {
+  width: 400px;
+  height: 400px;
+  background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation-duration: 22s;
+  animation-delay: -10s;
+  opacity: 0.08;
+}
+
+@keyframes orbFloat {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(40px, -30px) scale(1.05); }
+  50% { transform: translate(-20px, 50px) scale(0.95); }
+  75% { transform: translate(30px, 20px) scale(1.02); }
+}
+
+.bg-grid {
+  background-image:
+    linear-gradient(var(--border-subtle) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border-subtle) 1px, transparent 1px);
+  background-size: 80px 80px;
+  opacity: 0.4;
+}
+
+/* Cosmic Nebula Background */
+[data-bg="nebula"] .bg-nebula-clouds {
+  display: block;
+  opacity: 1;
+}
+
+.bg-nebula-cloud {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(145px);
+  opacity: 0.25;
+  animation: nebulaFloat 30s ease-in-out infinite alternate;
+}
+
+.bg-nebula-cloud--1 {
+  width: 650px;
+  height: 550px;
+  background: radial-gradient(circle, rgba(168, 85, 247, 0.45) 0%, rgba(59, 130, 246, 0.15) 70%, transparent 100%);
+  top: -10%;
+  right: -5%;
+}
+
+.bg-nebula-cloud--2 {
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(6, 182, 212, 0.45) 0%, rgba(99, 102, 241, 0.15) 70%, transparent 100%);
+  bottom: -15%;
+  left: -10%;
+  animation-delay: -10s;
+}
+
+.bg-stars {
+  background-image: 
+    radial-gradient(1px 1px at 20px 30px, #fff, rgba(0,0,0,0)),
+    radial-gradient(1.5px 1.5px at 40px 70px, rgba(255,255,255,0.85), rgba(0,0,0,0)),
+    radial-gradient(1px 1px at 50px 160px, #fff, rgba(0,0,0,0)),
+    radial-gradient(2px 2px at 80px 120px, rgba(255,255,255,0.9), rgba(0,0,0,0)),
+    radial-gradient(1.5px 1.5px at 110px 210px, #fff, rgba(0,0,0,0)),
+    radial-gradient(1px 1px at 150px 90px, rgba(255,255,255,0.65), rgba(0,0,0,0)),
+    radial-gradient(2px 2px at 190px 150px, #fff, rgba(0,0,0,0)),
+    radial-gradient(1px 1px at 230px 40px, rgba(255,255,255,0.85), rgba(0,0,0,0));
+  background-repeat: repeat;
+  background-size: 300px 300px;
+  opacity: 0.35;
+  animation: starsTwinkle 6s infinite alternate;
+}
+
+@keyframes nebulaFloat {
+  0% { transform: translate(0, 0) rotate(0deg) scale(1); }
+  100% { transform: translate(60px, 30px) rotate(15deg) scale(1.1); }
+}
+
+@keyframes starsTwinkle {
+  0%, 100% { opacity: 0.2; }
+  50% { opacity: 0.55; }
+}
+
+/* Sunset Hues Background */
+[data-bg="sunset"] {
+  background: radial-gradient(circle at 10% 10%, rgba(124, 58, 237, 0.18) 0%, transparent 60%),
+              radial-gradient(circle at 90% 90%, rgba(249, 115, 22, 0.18) 0%, rgba(225, 29, 72, 0.12) 35%, transparent 75%),
+              linear-gradient(to bottom, #0d0a1b, #191026, #0d0a1b) !important;
+}
+
+[data-theme="light"][data-bg="sunset"] {
+  background: radial-gradient(circle at 10% 10%, rgba(124, 58, 237, 0.12) 0%, transparent 60%),
+              radial-gradient(circle at 90% 90%, rgba(249, 115, 22, 0.2) 0%, rgba(225, 29, 72, 0.12) 35%, transparent 75%),
+              linear-gradient(to bottom, #fcf7fa, #faf0f4, #e6e9f5) !important;
+}
+
+/* Cyberpunk Grid Background */
+[data-bg="cyber"] .bg-cyber-grid-container {
+  display: block;
+  opacity: 1;
+}
+
+.bg-cyber-grid-container {
+  perspective: 350px;
+  overflow: hidden;
+}
+
+.bg-cyber-grid {
+  position: absolute;
+  top: 30%;
+  left: -50%;
+  right: -50%;
+  bottom: -150%;
+  background-image: 
+    linear-gradient(to right, rgba(236, 72, 153, 0.1) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(236, 72, 153, 0.1) 1px, transparent 1px);
+  background-size: 50px 50px;
+  transform: rotateX(75deg);
+  transform-origin: top center;
+  animation: cyberScroll 14s linear infinite;
+  mask-image: linear-gradient(to bottom, transparent 0%, black 50%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 50%);
+}
+
+.bg-cyber-horizon {
+  position: absolute;
+  top: 30%;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(236, 72, 153, 0.5), rgba(6, 182, 212, 0.5), transparent);
+  box-shadow: 0 0 10px rgba(236, 72, 153, 0.6);
+}
+
+@keyframes cyberScroll {
+  0% { background-position: 0 0; }
+  100% { background-position: 0 700px; }
+}
+
+[data-theme="light"] .bg-cyber-grid {
+  background-image: 
+    linear-gradient(to right, rgba(14, 165, 233, 0.15) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(14, 165, 233, 0.15) 1px, transparent 1px);
+}
+
+[data-theme="light"] .bg-cyber-horizon {
+  background: linear-gradient(90deg, transparent, rgba(14, 165, 233, 0.4), rgba(168, 85, 247, 0.4), transparent);
+  box-shadow: 0 0 8px rgba(14, 165, 233, 0.4);
+}
+
+/* Soothing Rain Background */
+[data-bg="rain"] .bg-canvas {
+  display: block;
+  opacity: 0.75;
+}
+
+/* Sakura Breeze Background */
+[data-bg="sakura"] .bg-canvas {
+  display: block;
+  opacity: 1;
+}
+
+.bg-canvas {
+  width: 100%;
+  height: 100%;
+}
+
+/* Deep Forest Background */
+[data-bg="forest"] .bg-forest-container {
+  display: block;
+  opacity: 1;
+}
+
+[data-bg="forest"] {
+  background: linear-gradient(135deg, #022019, #041814, #05120f) !important;
+}
+
+[data-theme="light"][data-bg="forest"] {
+  background: linear-gradient(135deg, #f0fdf4, #e8f5ec, #dcfce7) !important;
+}
+
+.bg-forest-container {
+  background: radial-gradient(circle at 20% 0%, rgba(16, 185, 129, 0.08) 0%, transparent 60%);
+}
+
+.bg-forest-ray {
+  position: absolute;
+  top: -40%;
+  left: 15%;
+  width: 150px;
+  height: 180%;
+  background: linear-gradient(to bottom, rgba(52, 211, 153, 0.05), transparent);
+  transform: rotate(-30deg);
+  transform-origin: top left;
+  filter: blur(20px);
+  animation: forestRays 18s ease-in-out infinite alternate;
+}
+
+.bg-forest-ray--2 {
+  left: 50%;
+  width: 220px;
+  animation-duration: 24s;
+  animation-delay: -6s;
+  background: linear-gradient(to bottom, rgba(16, 185, 129, 0.04), transparent);
+}
+
+@keyframes forestRays {
+  0% { transform: rotate(-33deg) scaleX(0.85); opacity: 0.4; }
+  100% { transform: rotate(-27deg) scaleX(1.15); opacity: 0.95; }
+}
+
+/* Studio Minimal Background */
+[data-bg="studio"] {
+  background: linear-gradient(135deg, #090c15, #06080e) !important;
+}
+
+[data-theme="light"][data-bg="studio"] {
+  background: linear-gradient(135deg, #f2f4fa, #e9ebf2) !important;
+}
+
+/* ---------- App Container ---------- */
+.app {
+  position: relative;
+  z-index: var(--z-base);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  padding: var(--space-lg) var(--space-md);
+}

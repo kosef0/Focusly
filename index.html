@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Focusly — A beautiful, customizable Pomodoro timer to boost your productivity. Supports multiple languages, themes, and personalization.">
+  <meta name="keywords" content="pomodoro, timer, productivity, focus, study, work, time management">
+  <meta name="author" content="Focusly">
+  <meta name="theme-color" content="#0a0e1a">
+  <meta property="og:title" content="Focusly — Beautiful Pomodoro Timer">
+  <meta property="og:description" content="Boost your productivity with a stunning, customizable Pomodoro timer.">
+  <meta property="og:type" content="website">
+  <title>Focusly — Pomodoro Timer</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='85'>🍅</text></svg>">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <!-- Background Effects -->
+  <div class="background-effects" aria-hidden="true" id="backgroundEffects">
+    <!-- Aurora Orbs -->
+    <div class="bg-aurora-orbs">
+      <div class="bg-orb bg-orb--1"></div>
+      <div class="bg-orb bg-orb--2"></div>
+      <div class="bg-orb bg-orb--3"></div>
+    </div>
+    
+    <!-- Cyberpunk Grid -->
+    <div class="bg-cyber-grid-container">
+      <div class="bg-cyber-grid"></div>
+      <div class="bg-cyber-horizon"></div>
+    </div>
+
+    <!-- Nebula Stars & Twinkling -->
+    <div class="bg-nebula-clouds">
+      <div class="bg-nebula-cloud bg-nebula-cloud--1"></div>
+      <div class="bg-nebula-cloud bg-nebula-cloud--2"></div>
+      <div class="bg-stars"></div>
+    </div>
+
+    <!-- Forest Rays -->
+    <div class="bg-forest-container">
+      <div class="bg-forest-ray bg-forest-ray--1"></div>
+      <div class="bg-forest-ray bg-forest-ray--2"></div>
+    </div>
+
+    <!-- Grid lines -->
+    <div class="bg-grid"></div>
+
+    <!-- Canvas for Rain / Sakura Petals / Interactive physics -->
+    <canvas id="bgCanvas" class="bg-canvas"></canvas>
+  </div>
+
+  <div class="app">
+    <!-- Header -->
+    <header class="header" role="banner">
+      <a href="#" class="logo" aria-label="Focusly Home">
+        <div class="logo__icon" aria-hidden="true">🍅</div>
+        <span class="logo__text">Focusly</span>
+      </a>
+      <div class="header-actions">
+        <!-- Language Button -->
+        <div class="language-select" id="languageSelect">
+          <button class="icon-btn" id="langBtn" aria-label="Change language" title="Change language">
+            🌐
+          </button>
+          <div class="language-select__dropdown" id="langDropdown" role="listbox" aria-label="Select language">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+        <!-- Dark/Light Toggle -->
+        <button class="icon-btn" id="themeToggleBtn" aria-label="Toggle dark/light mode" title="Toggle theme">
+          🌙
+        </button>
+        <!-- Settings -->
+        <button class="icon-btn" id="settingsBtn" aria-label="Open settings" title="Settings">
+          ⚙️
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main" role="main">
+      <!-- Main Layout Grid -->
+      <div class="main-layout">
+        <!-- Spacer to center the Timer section on desktop -->
+        <div class="main-layout__spacer" aria-hidden="true"></div>
+
+        <!-- Left Side: Timer & Stats -->
+        <div class="main-layout__left">
+          <!-- Mode Tabs -->
+          <nav class="mode-tabs" role="tablist" aria-label="Timer mode">
+            <button class="mode-tab mode-tab--active" role="tab" aria-selected="true" data-mode="pomodoro" id="tabPomodoro">Pomodoro</button>
+            <button class="mode-tab" role="tab" aria-selected="false" data-mode="shortBreak" id="tabShortBreak">Short Break</button>
+            <button class="mode-tab" role="tab" aria-selected="false" data-mode="longBreak" id="tabLongBreak">Long Break</button>
+          </nav>
+          <!-- Timer -->
+          <section class="timer-container" aria-label="Timer">
+            <div class="timer-ring" id="timerRing">
+              <svg class="timer-ring__svg" viewBox="0 0 340 340" aria-hidden="true">
+                <defs>
+                  <linearGradient id="timerGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="var(--color-primary)" />
+                    <stop offset="100%" stop-color="var(--color-accent)" />
+                  </linearGradient>
+                </defs>
+                <!-- Track -->
+                <circle
+                  class="timer-ring__track"
+                  cx="170" cy="170" r="155"
+                />
+                <!-- Glow -->
+                <circle
+                  class="timer-ring__glow"
+                  cx="170" cy="170" r="155"
+                  stroke-dasharray="974"
+                  stroke-dashoffset="0"
+                  id="timerGlow"
+                />
+                <!-- Progress -->
+                <circle
+                  class="timer-ring__progress"
+                  cx="170" cy="170" r="155"
+                  stroke-dasharray="974"
+                  stroke-dashoffset="0"
+                  id="timerProgress"
+                />
+              </svg>
+
+              <!-- Timer Display -->
+              <div class="timer-display">
+                <div class="timer-display__time" id="timerTime" aria-live="polite">25:00</div>
+                <div class="timer-display__label" id="timerLabel">FOCUS</div>
+              </div>
+            </div>
+
+            <!-- Controls -->
+            <div class="timer-controls">
+              <button class="btn btn--secondary" id="resetBtn" aria-label="Reset timer" title="Reset">
+                ↺
+              </button>
+              <button class="btn btn--primary" id="startBtn">Start</button>
+              <button class="btn btn--secondary" id="skipBtn" aria-label="Skip to next session" title="Skip">
+                ⏭
+              </button>
+            </div>
+
+            <div class="shortcut-hint" id="shortcutHint">
+              <kbd>Space</kbd> <!-- i18n text -->
+            </div>
+          </section>
+
+          <!-- Session Info -->
+          <section class="session-info" aria-label="Session statistics">
+            <div class="session-stat">
+              <span class="session-stat__value" id="sessionCount">0</span>
+              <span class="session-stat__label" id="sessionLabel">SESSIONS</span>
+            </div>
+            <div class="session-divider" aria-hidden="true"></div>
+            <div class="session-stat">
+              <span class="session-stat__value" id="totalTime">0m</span>
+              <span class="session-stat__label" id="totalLabel">TOTAL FOCUS</span>
+            </div>
+            <div class="session-divider" aria-hidden="true"></div>
+            <div class="pomo-dots" id="pomoDots" aria-label="Pomodoro progress">
+              <div class="pomo-dot pomo-dot--active"></div>
+              <div class="pomo-dot"></div>
+              <div class="pomo-dot"></div>
+              <div class="pomo-dot"></div>
+            </div>
+          </section>
+        </div>
+
+        <!-- Right Side: Tasks -->
+        <div class="main-layout__right">
+          <!-- Tasks Section -->
+          <section class="tasks-container" aria-label="Tasks">
+            <div class="tasks-header">
+              <h2 class="tasks-header__title" id="tasksTitle">Görevler</h2>
+              <span class="tasks-count" id="tasksCount">0 / 0</span>
+            </div>
+            
+            <form class="tasks-form" id="tasksForm">
+              <input 
+                type="text" 
+                class="tasks-input" 
+                id="tasksInput" 
+                placeholder="Yeni bir görev ekle..." 
+                required
+                maxlength="80"
+              >
+              <button type="submit" class="btn btn--primary tasks-add-btn" id="tasksAddBtn">+</button>
+            </form>
+
+            <ul class="tasks-list" id="tasksList">
+              <!-- Populated by JS -->
+            </ul>
+          </section>
+        </div>
+      </div>
+
+
+      <!-- Motivational Quote -->
+      <div class="motivation" id="motivation">
+        <p class="motivation__text" id="motivationText">"The secret of getting ahead is getting started."</p>
+        <p class="motivation__author" id="motivationAuthor">— Mark Twain</p>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p>Focusly — <span id="footerTagline">Stay focused, stay productive</span> 🍅</p>
+    </footer>
+  </div>
+
+  <!-- Settings Panel -->
+  <div class="settings-overlay" id="settingsOverlay" aria-hidden="true"></div>
+  <aside class="settings-panel" id="settingsPanel" role="dialog" aria-label="Settings" aria-hidden="true">
+    <div class="settings-header">
+      <h2 class="settings-header__title" id="settingsTitle">Settings</h2>
+      <button class="icon-btn" id="settingsCloseBtn" aria-label="Close settings">✕</button>
+    </div>
+    <div class="settings-body">
+
+      <!-- Timer Durations -->
+      <div class="settings-section">
+        <h3 class="settings-section__title" id="sectionTimerTitle">⏱ Timer</h3>
+
+        <div class="settings-row">
+          <div>
+            <div class="settings-row__label" id="labelPomodoro">Pomodoro</div>
+            <div class="settings-row__sublabel" id="sublabelPomodoro">Focus duration (min)</div>
+          </div>
+          <div class="number-input">
+            <button class="number-input__btn" data-target="pomodoroInput" data-action="decrease" aria-label="Decrease">−</button>
+            <input class="number-input__value" type="number" id="pomodoroInput" min="1" max="90" value="25">
+            <button class="number-input__btn" data-target="pomodoroInput" data-action="increase" aria-label="Increase">+</button>
+          </div>
+        </div>
+
+        <div class="settings-row">
+          <div>
+            <div class="settings-row__label" id="labelShortBreak">Short Break</div>
+            <div class="settings-row__sublabel" id="sublabelShortBreak">Rest duration (min)</div>
+          </div>
+          <div class="number-input">
+            <button class="number-input__btn" data-target="shortBreakInput" data-action="decrease" aria-label="Decrease">−</button>
+            <input class="number-input__value" type="number" id="shortBreakInput" min="1" max="30" value="5">
+            <button class="number-input__btn" data-target="shortBreakInput" data-action="increase" aria-label="Increase">+</button>
+          </div>
+        </div>
+
+        <div class="settings-row">
+          <div>
+            <div class="settings-row__label" id="labelLongBreak">Long Break</div>
+            <div class="settings-row__sublabel" id="sublabelLongBreak">Rest duration (min)</div>
+          </div>
+          <div class="number-input">
+            <button class="number-input__btn" data-target="longBreakInput" data-action="decrease" aria-label="Decrease">−</button>
+            <input class="number-input__value" type="number" id="longBreakInput" min="1" max="60" value="15">
+            <button class="number-input__btn" data-target="longBreakInput" data-action="increase" aria-label="Increase">+</button>
+          </div>
+        </div>
+
+        <div class="settings-row">
+          <div>
+            <div class="settings-row__label" id="labelLongBreakInterval">Long Break After</div>
+            <div class="settings-row__sublabel" id="sublabelLongBreakInterval">Sessions before long break</div>
+          </div>
+          <div class="number-input">
+            <button class="number-input__btn" data-target="longBreakIntervalInput" data-action="decrease" aria-label="Decrease">−</button>
+            <input class="number-input__value" type="number" id="longBreakIntervalInput" min="2" max="10" value="4">
+            <button class="number-input__btn" data-target="longBreakIntervalInput" data-action="increase" aria-label="Increase">+</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Notifications -->
+      <div class="settings-section">
+        <h3 class="settings-section__title" id="sectionNotificationsTitle">🔔 Notifications</h3>
+
+        <div class="settings-row">
+          <div class="settings-row__label" id="labelSound">Sound</div>
+          <label class="toggle">
+            <input class="toggle__input" type="checkbox" id="soundToggle" checked>
+            <span class="toggle__slider"></span>
+          </label>
+        </div>
+
+        <div class="settings-row">
+          <div class="settings-row__label" id="labelBrowserNotif">Browser Notifications</div>
+          <label class="toggle">
+            <input class="toggle__input" type="checkbox" id="notifToggle">
+            <span class="toggle__slider"></span>
+          </label>
+        </div>
+
+        <div class="settings-row">
+          <div class="settings-row__label" id="labelAutoStart">Auto-start Next</div>
+          <label class="toggle">
+            <input class="toggle__input" type="checkbox" id="autoStartToggle">
+            <span class="toggle__slider"></span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Appearance -->
+      <div class="settings-section">
+        <h3 class="settings-section__title" id="sectionAppearanceTitle">🎨 Appearance</h3>
+
+        <div class="settings-row">
+          <div class="settings-row__label" id="labelThemeMode">Theme</div>
+          <div class="appearance-toggle">
+            <button class="appearance-btn appearance-btn--active" data-appearance="dark" id="darkModeBtn">🌙 <span data-i18n="dark">Dark</span></button>
+            <button class="appearance-btn" data-appearance="light" id="lightModeBtn">☀️ <span data-i18n="light">Light</span></button>
+          </div>
+        </div>
+
+        <div>
+          <div class="settings-row__label" id="labelAccentColor">Accent Color</div>
+          <div class="theme-colors" role="radiogroup" aria-label="Accent color">
+            <button class="theme-color-btn theme-color-btn--ocean theme-color-btn--active" data-color="ocean" role="radio" aria-checked="true" aria-label="Ocean" title="Ocean"></button>
+            <button class="theme-color-btn theme-color-btn--sunset" data-color="sunset" role="radio" aria-checked="false" aria-label="Sunset" title="Sunset"></button>
+            <button class="theme-color-btn theme-color-btn--forest" data-color="forest" role="radio" aria-checked="false" aria-label="Forest" title="Forest"></button>
+            <button class="theme-color-btn theme-color-btn--lavender" data-color="lavender" role="radio" aria-checked="false" aria-label="Lavender" title="Lavender"></button>
+            <button class="theme-color-btn theme-color-btn--cherry" data-color="cherry" role="radio" aria-checked="false" aria-label="Cherry" title="Cherry"></button>
+            <button class="theme-color-btn theme-color-btn--amber" data-color="amber" role="radio" aria-checked="false" aria-label="Amber" title="Amber"></button>
+            <button class="theme-color-btn theme-color-btn--rose" data-color="rose" role="radio" aria-checked="false" aria-label="Rose" title="Rose"></button>
+            <button class="theme-color-btn theme-color-btn--teal" data-color="teal" role="radio" aria-checked="false" aria-label="Teal" title="Teal"></button>
+            <button class="theme-color-btn theme-color-btn--indigo" data-color="indigo" role="radio" aria-checked="false" aria-label="Indigo" title="Indigo"></button>
+            <button class="theme-color-btn theme-color-btn--emerald" data-color="emerald" role="radio" aria-checked="false" aria-label="Emerald" title="Emerald"></button>
+            <button class="theme-color-btn theme-color-btn--coral" data-color="coral" role="radio" aria-checked="false" aria-label="Coral" title="Coral"></button>
+            <button class="theme-color-btn theme-color-btn--slate" data-color="slate" role="radio" aria-checked="false" aria-label="Slate" title="Slate"></button>
+          </div>
+        </div>
+
+        <div style="margin-top: var(--space-md);">
+          <div class="settings-row__label" id="labelBackground" style="margin-bottom: var(--space-sm);">Background Style</div>
+          <div class="bg-selector-grid" role="radiogroup" aria-label="Background style">
+            <button class="bg-option-card bg-option-card--active" data-bg="aurora" role="radio" aria-checked="true" title="Aurora">
+              <div class="bg-option-preview bg-option-preview--aurora">
+                <div class="bg-preview-orb bg-preview-orb--1"></div>
+                <div class="bg-preview-orb bg-preview-orb--2"></div>
+              </div>
+              <span class="bg-option-name" id="bgNameAurora">Aurora</span>
+            </button>
+            <button class="bg-option-card" data-bg="nebula" role="radio" aria-checked="false" title="Cosmic Nebula">
+              <div class="bg-option-preview bg-option-preview--nebula">
+                <div class="bg-preview-stars"></div>
+              </div>
+              <span class="bg-option-name" id="bgNameNebula">Cosmic Nebula</span>
+            </button>
+            <button class="bg-option-card" data-bg="sunset" role="radio" aria-checked="false" title="Sunset Hues">
+              <div class="bg-option-preview bg-option-preview--sunset"></div>
+              <span class="bg-option-name" id="bgNameSunset">Sunset Hues</span>
+            </button>
+            <button class="bg-option-card" data-bg="cyber" role="radio" aria-checked="false" title="Cyberpunk Grid">
+              <div class="bg-option-preview bg-option-preview--cyber">
+                <div class="bg-preview-grid"></div>
+              </div>
+              <span class="bg-option-name" id="bgNameCyber">Cyberpunk Grid</span>
+            </button>
+            <button class="bg-option-card" data-bg="rain" role="radio" aria-checked="false" title="Soothing Rain">
+              <div class="bg-option-preview bg-option-preview--rain">
+                <div class="bg-preview-rain"></div>
+              </div>
+              <span class="bg-option-name" id="bgNameRain">Soothing Rain</span>
+            </button>
+            <button class="bg-option-card" data-bg="sakura" role="radio" aria-checked="false" title="Sakura Breeze">
+              <div class="bg-option-preview bg-option-preview--sakura">
+                <div class="bg-preview-petal"></div>
+              </div>
+              <span class="bg-option-name" id="bgNameSakura">Sakura Breeze</span>
+            </button>
+            <button class="bg-option-card" data-bg="forest" role="radio" aria-checked="false" title="Deep Forest">
+              <div class="bg-option-preview bg-option-preview--forest"></div>
+              <span class="bg-option-name" id="bgNameForest">Deep Forest</span>
+            </button>
+            <button class="bg-option-card" data-bg="studio" role="radio" aria-checked="false" title="Studio Minimal">
+              <div class="bg-option-preview bg-option-preview--studio"></div>
+              <span class="bg-option-name" id="bgNameStudio">Studio Minimal</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </aside>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toastContainer" aria-live="polite"></div>
+
+  <script src="js/translations.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

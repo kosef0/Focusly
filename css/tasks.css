@@ -1,0 +1,275 @@
+/* ============================================
+   FOCUSLY — Premium Tasks (To-Do) Component
+   ============================================ */
+
+/* ---------- Tasks Container ---------- */
+.tasks-container {
+  padding: var(--space-lg);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xl);
+  -webkit-backdrop-filter: blur(24px);
+  backdrop-filter: blur(24px);
+  box-shadow: var(--shadow-md);
+  transition: all var(--transition-base);
+  width: 100%;
+  text-align: left;
+  position: relative;
+  overflow: hidden;
+}
+
+.tasks-container:hover {
+  border-color: var(--border-medium);
+  box-shadow: var(--shadow-lg);
+}
+
+.tasks-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-md);
+}
+
+.tasks-header__title {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+
+.tasks-count {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--color-primary-light);
+  background: hsla(var(--hue-primary), 80%, 55%, 0.1);
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: var(--radius-sm);
+  border: 1px solid hsla(var(--hue-primary), 80%, 55%, 0.2);
+  letter-spacing: 0.05em;
+  transition: all var(--transition-base);
+}
+
+.tasks-form {
+  display: flex;
+  align-items: stretch;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-md);
+}
+
+.tasks-input {
+  flex: 1;
+  height: 42px; /* Fixed height for premium alignment */
+  background: var(--bg-glass);
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-full);
+  padding: 0 var(--space-md);
+  color: var(--text-primary);
+  font-family: var(--font-ui);
+  font-size: 0.9rem;
+  outline: none;
+  transition: all var(--transition-base);
+}
+
+.tasks-input:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 2px hsla(var(--hue-primary), 80%, 55%, 0.15);
+  background: var(--bg-glass-strong);
+}
+
+.tasks-add-btn {
+  min-width: 80px !important; /* Widened as requested */
+  width: 80px;
+  height: 42px !important;
+  padding: 0 var(--space-sm) !important;
+  font-family: var(--font-display) !important;
+  font-weight: 600 !important;
+  font-size: 1.1rem !important;
+  border-radius: var(--radius-full) !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background: var(--color-primary);
+  color: white;
+  border: none;
+  box-shadow: var(--shadow-glow), var(--shadow-sm);
+  transition: all var(--transition-base) !important;
+}
+
+.tasks-add-btn:hover {
+  background: var(--color-primary-light);
+  box-shadow: var(--shadow-glow-strong), var(--shadow-md);
+  transform: translateY(-1px);
+}
+
+.tasks-add-btn:active {
+  transform: translateY(0);
+}
+
+.tasks-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-height: 280px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  padding-right: 2px;
+}
+
+/* Custom scrollbar for tasks list */
+.tasks-list::-webkit-scrollbar {
+  width: 4px;
+}
+.tasks-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+.tasks-list::-webkit-scrollbar-thumb {
+  background: var(--border-medium);
+  border-radius: var(--radius-full);
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-sm) var(--space-md);
+  background: var(--bg-glass);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  transition: all var(--transition-base);
+  animation: slideIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) ease;
+  gap: var(--space-sm);
+  min-height: 46px;
+}
+
+.task-item:hover {
+  background: var(--bg-glass-strong);
+  border-color: var(--border-medium);
+}
+
+.task-item__content {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  flex: 1;
+  cursor: pointer;
+  user-select: none;
+}
+
+/* Circular aesthetic checkbox */
+.task-item__checkbox {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--border-strong);
+  border-radius: 50%; /* Circle Checkbox */
+  outline: none;
+  cursor: pointer;
+  transition: all var(--transition-base);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.task-item__checkbox:checked {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  animation: popScale 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.task-item__checkbox:checked::after {
+  content: '✓';
+  color: white;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.task-item__text {
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  transition: all var(--transition-base);
+  word-break: break-word;
+  line-height: 1.4;
+}
+
+.task-item--completed .task-item__text {
+  text-decoration: line-through;
+  color: var(--text-tertiary);
+}
+
+.task-item__delete {
+  background: transparent;
+  border: none;
+  color: var(--text-tertiary);
+  cursor: pointer;
+  padding: var(--space-xs);
+  border-radius: var(--radius-sm);
+  transition: all var(--transition-base);
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.5;
+}
+
+.task-item__delete:hover {
+  color: var(--color-accent);
+  background: rgba(255, 100, 100, 0.1);
+  opacity: 1;
+}
+
+.task-empty {
+  text-align: center;
+  padding: var(--space-lg) var(--space-md);
+  color: var(--text-tertiary);
+  font-size: 0.85rem;
+  font-style: italic;
+}
+
+/* Animations */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.task-item--deleting {
+  animation: slideOut 0.25s cubic-bezier(0.4, 0, 1, 1) forwards !important;
+  pointer-events: none;
+}
+
+@keyframes slideOut {
+  0% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    max-height: 50px;
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.95) translateY(-8px);
+    max-height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    border-color: transparent;
+  }
+}
+
+@keyframes popScale {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
