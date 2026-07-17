@@ -58,6 +58,10 @@
         <span class="logo__text">Focusly</span>
       </a>
       <div class="header-actions">
+        <!-- Tasks Toggle -->
+        <button class="icon-btn" id="tasksToggleBtn" aria-label="Toggle tasks" title="Tasks">
+          📋
+        </button>
         <!-- Language Button -->
         <div class="language-select" id="languageSelect">
           <button class="icon-btn" id="langBtn" aria-label="Change language" title="Change language">
@@ -169,34 +173,35 @@
             </div>
           </section>
         </div>
-
-        <!-- Right Side: Tasks -->
-        <div class="main-layout__right">
-          <!-- Tasks Section -->
-          <section class="tasks-container" aria-label="Tasks">
-            <div class="tasks-header">
-              <h2 class="tasks-header__title" id="tasksTitle">Görevler</h2>
-              <span class="tasks-count" id="tasksCount">0 / 0</span>
-            </div>
-            
-            <form class="tasks-form" id="tasksForm">
-              <input 
-                type="text" 
-                class="tasks-input" 
-                id="tasksInput" 
-                placeholder="Yeni bir görev ekle..." 
-                required
-                maxlength="80"
-              >
-              <button type="submit" class="btn btn--primary tasks-add-btn" id="tasksAddBtn">+</button>
-            </form>
-
-            <ul class="tasks-list" id="tasksList">
-              <!-- Populated by JS -->
-            </ul>
-          </section>
-        </div>
       </div>
+
+      <!-- Tasks Floating Panel -->
+      <div class="tasks-overlay" id="tasksOverlay" aria-hidden="true"></div>
+      <section class="tasks-panel" id="tasksPanel" aria-label="Tasks" aria-hidden="true">
+        <div class="tasks-panel__header">
+          <div class="tasks-header">
+            <h2 class="tasks-header__title" id="tasksTitle">Görevler</h2>
+            <span class="tasks-count" id="tasksCount">0 / 0</span>
+          </div>
+          <button class="icon-btn tasks-panel__close" id="tasksCloseBtn" aria-label="Close tasks">✕</button>
+        </div>
+
+        <form class="tasks-form" id="tasksForm">
+          <input 
+            type="text" 
+            class="tasks-input" 
+            id="tasksInput" 
+            placeholder="Yeni bir görev ekle..." 
+            required
+            maxlength="80"
+          >
+          <button type="submit" class="btn btn--primary tasks-add-btn" id="tasksAddBtn">+</button>
+        </form>
+
+        <ul class="tasks-list" id="tasksList">
+          <!-- Populated by JS -->
+        </ul>
+      </section>
 
 
       <!-- Motivational Quote -->

@@ -1391,16 +1391,19 @@
   }
 }
 
-/* ---------- Main Layout (Centering Timer & Pushing Tasks Right) ---------- */
+/* ---------- Main Layout (Centered Timer) ---------- */
 .main-layout {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  display: flex;
+  justify-content: center;
   align-items: flex-start;
   width: 100%;
-  max-width: 1150px;
+  max-width: 600px;
   margin: 0 auto;
-  gap: var(--space-xl);
   padding: 0 var(--space-lg);
+}
+
+.main-layout__spacer {
+  display: none;
 }
 
 .main-layout__left {
@@ -1408,73 +1411,16 @@
   flex-direction: column;
   align-items: center;
   width: 100%;
-  min-width: 320px;
 }
 
-.main-layout__right {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end; /* Push Tasks container to the right edge */
-  width: 100%;
-}
-
-.main-layout__right .tasks-container {
-  margin-top: 0;
-  width: 100%;
-  max-width: 440px; /* Widened to 440px */
-  margin-left: auto;
-  margin-right: 0;
-}
-
-/* Responsiveness: Stack columns on smaller viewports */
-@media (max-width: 1000px) {
-  .main-layout {
-    grid-template-columns: 1fr;
-    justify-items: center;
-    gap: var(--space-lg);
-    padding: 0;
-  }
-  
-  .main-layout__spacer {
-    display: none;
-  }
-  
-  .main-layout__left {
-    min-width: unset;
-    width: 100%;
-    max-width: 480px;
-  }
-  
-  .main-layout__right {
-    align-items: center;
-    width: 100%;
-    max-width: 480px;
-  }
-  
-  .main-layout__right .tasks-container {
-    margin-top: var(--space-lg);
-    max-width: 100%;
-    margin-left: auto;
-    margin-right: auto;
-  }
-}
-
+/* Responsiveness */
 @media (max-width: 600px) {
   .main-layout {
     padding: 0;
-    gap: var(--space-md);
   }
 
   .main-layout__left {
     max-width: 100%;
-  }
-
-  .main-layout__right {
-    max-width: 100%;
-  }
-
-  .main-layout__right .tasks-container {
-    margin-top: var(--space-md);
   }
 }
 

@@ -139,6 +139,26 @@ function createNotificationSound() {
       },
 
       /* ========================================
+         TASK DONE — Satisfying "tring!" chime
+         When marking a task as completed
+         ======================================== */
+      playTaskDone() {
+        ensureContext();
+        const now = audioCtx.currentTime;
+
+        // Bright bell strike
+        playTone(1318.5, now, 0.12, 'sine', 0.22);       // E6
+        playTone(1568,   now + 0.06, 0.14, 'sine', 0.18); // G6
+        playTone(2093,   now + 0.12, 0.20, 'sine', 0.15); // C7 (sparkle)
+
+        // Warm undertone
+        playTone(659.25, now, 0.18, 'triangle', 0.08);    // E5 body
+
+        // Tiny metallic ring
+        playNoiseBurst(now, 0.02, 0.05);
+      },
+
+      /* ========================================
          SIMPLE TICK — Minimal UI feedback tick
          For general interactions
          ======================================== */
@@ -155,6 +175,7 @@ function createNotificationSound() {
       playComplete() {},
       playTick() {},
       playCountdownTick() {},
+      playTaskDone() {},
     };
   }
 }

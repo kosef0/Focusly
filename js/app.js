@@ -96,6 +96,7 @@ const App = {
       'resetSessionBtn', 'resetSessionBtnText',
       'sectionAppearanceTitle', 'labelThemeMode', 'labelAccentColor',
       // Tasks elements
+      'tasksToggleBtn', 'tasksCloseBtn', 'tasksPanel', 'tasksOverlay',
       'tasksForm', 'tasksInput', 'tasksList', 'tasksTitle', 'tasksCount',
     ];
 
@@ -649,6 +650,11 @@ const App = {
       this.addTask();
     });
 
+    // Tasks panel toggle
+    this.els.tasksToggleBtn?.addEventListener('click', () => this.toggleTasks());
+    this.els.tasksCloseBtn?.addEventListener('click', () => this.closeTasks());
+    this.els.tasksOverlay?.addEventListener('click', () => this.closeTasks());
+
     // Tasks list click interactions (checkbox / delete)
     this.els.tasksList?.addEventListener('click', (e) => {
       const target = e.target;
@@ -683,6 +689,7 @@ const App = {
           break;
         case 'Escape':
           this.closeSettings();
+          this.closeTasks();
           break;
       }
     });
@@ -1053,6 +1060,10 @@ const App = {
     const task = this.state.tasks.find(t => t.id === id);
     if (task) {
       task.completed = !task.completed;
+      // Play 'tring' sound when marking as done
+      if (task.completed && this.settings.sound) {
+        this.sound?.playTaskDone();
+      }
       this.saveTasks();
       this.renderTasks();
     }
@@ -1210,6 +1221,32 @@ const App = {
 
     this.showToast(this.t('sessionResetSuccess'));
     this.showRandomQuote();
+  },
+
+  /* ---------- Tasks Panel ---------- */
+  toggleTasks() {
+    const isOpen = this.els.tasksPanel?.classList.contains('tasks-panel--open');
+    if (isOpen) {
+      this.closeTasks();
+    } else {
+      this.openTasks();
+    }
+  },
+
+  openTasks() {
+    this.els.tasksPanel?.classList.add('tasks-panel--open');
+    this.els.tasksOverlay?.classList.add('tasks-overlay--open');
+    this.els.tasksPanel?.setAttribute('aria-hidden', 'false');
+    this.els.tasksOverlay?.setAttribute('aria-hidden', 'false');
+    // Focus the input for quick task entry
+    setTimeout(() => this.els.tasksInput?.focus(), 300);
+  },
+
+  closeTasks() {
+    this.els.tasksPanel?.classList.remove('tasks-panel--open');
+    this.els.tasksOverlay?.classList.remove('tasks-overlay--open');
+    this.els.tasksPanel?.setAttribute('aria-hidden', 'true');
+    this.els.tasksOverlay?.setAttribute('aria-hidden', 'true');
   },
 
   /* ---------- Settings Panel ---------- */
