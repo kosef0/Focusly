@@ -65,6 +65,13 @@ const TRANSLATIONS = {
     tasks: 'Tasks',
     addTaskPlaceholder: 'Add a new task...',
     noTasks: 'No tasks for today. Start fresh!',
+    // Session reset
+    sectionSession: '📊 Session Data',
+    labelResetSession: 'Reset Session',
+    sublabelResetSession: 'Clears all sessions, focus time, and tasks. Start fresh!',
+    resetAllData: 'Reset All Data',
+    confirmReset: 'Click again to confirm!',
+    sessionResetSuccess: '🔄 Session reset! Starting fresh.',
     // Quotes
     quotes: [
       { text: '"The secret of getting ahead is getting started."', author: '— Mark Twain' },
@@ -132,6 +139,13 @@ const TRANSLATIONS = {
     tasks: 'Görevler',
     addTaskPlaceholder: 'Yeni bir görev ekle...',
     noTasks: 'Bugün için bir görev yok. Yeni bir tane ekle!',
+    // Session reset
+    sectionSession: '📊 Oturum Verileri',
+    labelResetSession: 'Oturumu Sıfırla',
+    sublabelResetSession: 'Tüm oturumları, odaklanma süresini ve görevleri sıfırlar. Sıfırdan başla!',
+    resetAllData: 'Tüm Verileri Sıfırla',
+    confirmReset: 'Onaylamak için tekrar tıkla!',
+    sessionResetSuccess: '🔄 Oturum sıfırlandı! Sıfırdan başlıyoruz.',
     quotes: [
       { text: '"İlerlemenin sırrı başlamaktır."', author: '— Mark Twain' },
       { text: '"Meşgul olmak yerine verimli olmaya odaklan."', author: '— Tim Ferriss' },
@@ -189,6 +203,13 @@ const TRANSLATIONS = {
     tasks: 'Tareas',
     addTaskPlaceholder: 'Añadir nueva tarea...',
     noTasks: 'No hay tareas para hoy. ¡Empieza de nuevo!',
+    // Session reset
+    sectionSession: '📊 Datos de Sesión',
+    labelResetSession: 'Reiniciar Sesión',
+    sublabelResetSession: 'Borra todas las sesiones, tiempo de enfoque y tareas. ¡Empieza de nuevo!',
+    resetAllData: 'Reiniciar Todos los Datos',
+    confirmReset: '¡Haz clic de nuevo para confirmar!',
+    sessionResetSuccess: '🔄 ¡Sesión reiniciada! Empezando de nuevo.',
     quotes: [
       { text: '"El secreto de avanzar es empezar."', author: '— Mark Twain' },
       { text: '"Concéntrate en ser productivo, no en estar ocupado."', author: '— Tim Ferriss' },
@@ -246,6 +267,13 @@ const TRANSLATIONS = {
     tasks: 'Tâches',
     addTaskPlaceholder: 'Ajouter une nouvelle tâche...',
     noTasks: 'Aucune tâche pour aujourd\'hui. Recommencez à zéro !',
+    // Session reset
+    sectionSession: '📊 Données de Session',
+    labelResetSession: 'Réinitialiser la Session',
+    sublabelResetSession: 'Efface toutes les sessions, le temps de concentration et les tâches. Recommencez !',
+    resetAllData: 'Réinitialiser Toutes les Données',
+    confirmReset: 'Cliquez à nouveau pour confirmer !',
+    sessionResetSuccess: '🔄 Session réinitialisée ! On repart à zéro.',
     quotes: [
       { text: '"Le secret pour avancer est de commencer."', author: '— Mark Twain' },
       { text: '"Concentrez-vous sur la productivité, pas sur l\'occupation."', author: '— Tim Ferriss' },
@@ -303,6 +331,13 @@ const TRANSLATIONS = {
     tasks: 'Aufgaben',
     addTaskPlaceholder: 'Neue Aufgabe hinzufügen...',
     noTasks: 'Keine Aufgaben für heute. Starte neu!',
+    // Session reset
+    sectionSession: '📊 Sitzungsdaten',
+    labelResetSession: 'Sitzung Zurücksetzen',
+    sublabelResetSession: 'Löscht alle Sitzungen, Fokuszeit und Aufgaben. Starte neu!',
+    resetAllData: 'Alle Daten Zurücksetzen',
+    confirmReset: 'Zum Bestätigen erneut klicken!',
+    sessionResetSuccess: '🔄 Sitzung zurückgesetzt! Neustart.',
     quotes: [
       { text: '"Das Geheimnis des Vorwärtskommens ist anzufangen."', author: '— Mark Twain' },
       { text: '"Konzentriere dich darauf, produktiv zu sein, nicht beschäftigt."', author: '— Tim Ferriss' },
@@ -360,6 +395,13 @@ const TRANSLATIONS = {
     tasks: 'タスク',
     addTaskPlaceholder: '新しいタスクを追加...',
     noTasks: '今日のタスクはありません。新しく始めましょう！',
+    // Session reset
+    sectionSession: '📊 セッションデータ',
+    labelResetSession: 'セッションをリセット',
+    sublabelResetSession: 'すべてのセッション、集中時間、タスクをクリアします。最初からやり直し！',
+    resetAllData: 'すべてのデータをリセット',
+    confirmReset: 'もう一度クリックして確認！',
+    sessionResetSuccess: '🔄 セッションがリセットされました！',
     quotes: [
       { text: '「前に進む秘訣は、始めることだ。」', author: '— マーク・トウェイン' },
       { text: '「忙しくすることではなく、生産的であることに集中しよう。」', author: '— ティム・フェリス' },
@@ -417,6 +459,13 @@ const TRANSLATIONS = {
     tasks: '任务',
     addTaskPlaceholder: '添加新任务...',
     noTasks: '今天没有任务。开始新的一天吧！',
+    // Session reset
+    sectionSession: '📊 会话数据',
+    labelResetSession: '重置会话',
+    sublabelResetSession: '清除所有会话、专注时间和任务。从头开始！',
+    resetAllData: '重置所有数据',
+    confirmReset: '再次点击确认！',
+    sessionResetSuccess: '🔄 会话已重置！重新开始。',
     quotes: [
       { text: '"前进的秘诀在于开始。"', author: '— 马克·吐温' },
       { text: '"专注于高效，而非忙碌。"', author: '— 蒂姆·费里斯' },
@@ -474,6 +523,13 @@ const TRANSLATIONS = {
     tasks: 'المهام',
     addTaskPlaceholder: 'إضافة مهمة جديدة...',
     noTasks: 'لا توجد مهام اليوم. ابدأ من جديد!',
+    // Session reset
+    sectionSession: '📊 بيانات الجلسة',
+    labelResetSession: 'إعادة تعيين الجلسة',
+    sublabelResetSession: 'يمسح جميع الجلسات ووقت التركيز والمهام. ابدأ من جديد!',
+    resetAllData: 'إعادة تعيين جميع البيانات',
+    confirmReset: 'انقر مرة أخرى للتأكيد!',
+    sessionResetSuccess: '🔄 تم إعادة تعيين الجلسة! بداية جديدة.',
     quotes: [
       { text: '"سر التقدم هو البدء."', author: '— مارك توين' },
       { text: '"ركز على أن تكون منتجًا وليس مشغولًا."', author: '— تيم فيريس' },
@@ -531,6 +587,13 @@ const TRANSLATIONS = {
     tasks: 'Tarefas',
     addTaskPlaceholder: 'Adicionar nova tarefa...',
     noTasks: 'Sem tarefas para hoje. Comece do zero!',
+    // Session reset
+    sectionSession: '📊 Dados da Sessão',
+    labelResetSession: 'Redefinir Sessão',
+    sublabelResetSession: 'Limpa todas as sessões, tempo de foco e tarefas. Comece do zero!',
+    resetAllData: 'Redefinir Todos os Dados',
+    confirmReset: 'Clique novamente para confirmar!',
+    sessionResetSuccess: '🔄 Sessão redefinida! Recomeçando.',
     quotes: [
       { text: '"O segredo de progredir é começar."', author: '— Mark Twain' },
       { text: '"Concontre-se em ser produtivo, não ocupado."', author: '— Tim Ferriss' },
@@ -588,6 +651,13 @@ const TRANSLATIONS = {
     tasks: '할 일',
     addTaskPlaceholder: '새로운 할 일 추가...',
     noTasks: '오늘의 할 일이 없습니다. 새로 시작해보세요!',
+    // Session reset
+    sectionSession: '📊 세션 데이터',
+    labelResetSession: '세션 초기화',
+    sublabelResetSession: '모든 세션, 집중 시간, 할 일을 초기화합니다. 새로 시작!',
+    resetAllData: '모든 데이터 초기화',
+    confirmReset: '확인하려면 다시 클릭하세요!',
+    sessionResetSuccess: '🔄 세션이 초기화되었습니다! 새로 시작합니다.',
     quotes: [
       { text: '"앞으로 나아가는 비결은 시작하는 것이다."', author: '— 마크 트웨인' },
       { text: '"바쁜 것이 아니라 생산적인 것에 집중하라."', author: '— 팀 페리스' },
@@ -645,6 +715,13 @@ const TRANSLATIONS = {
     tasks: 'Задачи',
     addTaskPlaceholder: 'Добавить новую задачу...',
     noTasks: 'Нет задач на сегодня. Начните с чистого листа!',
+    // Session reset
+    sectionSession: '📊 Данные Сессии',
+    labelResetSession: 'Сбросить Сессию',
+    sublabelResetSession: 'Очищает все сессии, время фокуса и задачи. Начните заново!',
+    resetAllData: 'Сбросить Все Данные',
+    confirmReset: 'Нажмите ещё раз для подтверждения!',
+    sessionResetSuccess: '🔄 Сессия сброшена! Начинаем заново.',
     quotes: [
       { text: '«Секрет движения вперёд — начать.»', author: '— Марк Твен' },
       { text: '«Сосредоточься на продуктивности, а не на занятости.»', author: '— Тим Феррис' },
@@ -702,6 +779,13 @@ const TRANSLATIONS = {
     tasks: 'कार्य',
     addTaskPlaceholder: 'नया कार्य जोड़ें...',
     noTasks: 'आज के लिए कोई कार्य नहीं। नई शुरुआत करें!',
+    // Session reset
+    sectionSession: '📊 सत्र डेटा',
+    labelResetSession: 'सत्र रीसेट करें',
+    sublabelResetSession: 'सभी सत्र, फोकस समय और कार्य साफ़ करता है। नई शुरुआत!',
+    resetAllData: 'सभी डेटा रीसेट करें',
+    confirmReset: 'पुष्टि के लिए फिर से क्लिक करें!',
+    sessionResetSuccess: '🔄 सत्र रीसेट हो गया! नई शुरुआत।',
     quotes: [
       { text: '"आगे बढ़ने का रहस्य शुरू करना है।"', author: '— मार्क ट्वेन' },
       { text: '"व्यस्त होने पर नहीं, उत्पादक होने पर ध्यान दें।"', author: '— टिम फेरिस' },

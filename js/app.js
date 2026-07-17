@@ -92,6 +92,8 @@ const App = {
       'labelLongBreak', 'sublabelLongBreak',
       'labelLongBreakInterval', 'sublabelLongBreakInterval',
       'sectionNotificationsTitle', 'labelSound', 'labelBrowserNotif', 'labelAutoStart',
+      'sectionSessionTitle', 'labelResetSession', 'sublabelResetSession',
+      'resetSessionBtn', 'resetSessionBtnText',
       'sectionAppearanceTitle', 'labelThemeMode', 'labelAccentColor',
       // Tasks elements
       'tasksForm', 'tasksInput', 'tasksList', 'tasksTitle', 'tasksCount',
@@ -222,6 +224,12 @@ const App = {
     if (this.els.labelSound) this.els.labelSound.textContent = this.t('labelSound');
     if (this.els.labelBrowserNotif) this.els.labelBrowserNotif.textContent = this.t('labelBrowserNotif');
     if (this.els.labelAutoStart) this.els.labelAutoStart.textContent = this.t('labelAutoStart');
+    // Session data section
+    if (this.els.sectionSessionTitle) this.els.sectionSessionTitle.textContent = this.t('sectionSession');
+    if (this.els.labelResetSession) this.els.labelResetSession.textContent = this.t('labelResetSession');
+    if (this.els.sublabelResetSession) this.els.sublabelResetSession.textContent = this.t('sublabelResetSession');
+    if (this.els.resetSessionBtnText) this.els.resetSessionBtnText.textContent = this.t('resetAllData');
+
     if (this.els.sectionAppearanceTitle) this.els.sectionAppearanceTitle.textContent = this.t('sectionAppearance');
     if (this.els.labelThemeMode) this.els.labelThemeMode.textContent = this.t('labelThemeMode');
     if (this.els.labelAccentColor) this.els.labelAccentColor.textContent = this.t('labelAccentColor');
@@ -605,6 +613,11 @@ const App = {
     this.els.autoStartToggle?.addEventListener('change', () => {
       this.settings.autoStart = this.els.autoStartToggle.checked;
       this.saveSettings();
+    });
+
+    // Reset session button (double-click to confirm)
+    this.els.resetSessionBtn?.addEventListener('click', () => {
+      this.handleResetSessionClick();
     });
 
     // Language dropdown
@@ -1106,6 +1119,85 @@ const App = {
     if (this.els.motivationAuthor) {
       this.els.motivationAuthor.textContent = quote.author;
     }
+  },
+
+  /* ---------- Reset Session ---------- */
+  resetSessionConfirmTimeout: null,
+
+  handleResetSessionClick() {
+    const btn = this.els.resetSessionBtn;
+    if (!btn) return;
+
+    // If already in confirm state, execute reset
+    if (btn.classList.contains('btn--confirm')) {
+      clearTimeout(this.resetSessionConfirmTimeout);
+      this.resetFullSession();
+      btn.classList.remove('btn--confirm');
+      if (this.els.resetSessionBtnText) {
+        this.els.resetSessionBtnText.textContent = this.t('resetAllData');
+      }
+      return;
+    }
+
+    // Enter confirm state
+    btn.classList.add('btn--confirm');
+    if (this.els.resetSessionBtnText) {
+      this.els.resetSessionBtnText.textContent = this.t('confirmReset');
+    }
+
+    // Auto-cancel after 3 seconds
+    this.resetSessionConfirmTimeout = setTimeout(() => {
+      btn.classList.remove('btn--confirm');
+      if (this.els.resetSessionBtnText) {
+        this.els.resetSessionBtnText.textContent = this.t('resetAllData');
+      }
+    }, 3000);
+  },
+
+  resetFullSession() {
+    // Stop any running timer
+    this.pauseTimer();
+    this.state.status = 'idle';
+
+    // Reset session state
+    this.state.sessionsCompleted = 0;
+    this.state.totalFocusMinutes = 0;
+    this.state.pomodoroInCycle = 0;
+
+    // Reset tasks
+    this.state.tasks = [];
+
+    // Reset mode to pomodoro
+    this.state.mode = 'pomodoro';
+    const minutes = this.settings.pomodoro;
+    this.state.totalTime = minutes * 60;
+    this.state.timeRemaining = this.state.totalTime;
+
+    // Clear localStorage session & tasks
+    localStorage.removeItem('focusly_session');
+    localStorage.removeItem('focusly_tasks');
+
+    // Update all UI
+    this.updateTimerDisplay();
+    this.updateProgress();
+    this.updateStartButtonText();
+    this.updateTimerLabel();
+    this.updateSessionInfo();
+    this.updatePomoDots();
+    this.renderTasks();
+    this.updateTitle();
+
+    // Update tab styling
+    document.querySelectorAll('.mode-tab').forEach(tab => {
+      const isActive = tab.dataset.mode === 'pomodoro';
+      tab.classList.toggle('mode-tab--active', isActive);
+      tab.setAttribute('aria-selected', isActive);
+    });
+
+    this.els.timerRing?.classList.remove('timer-ring--running');
+
+    this.showToast(this.t('sessionResetSuccess'));
+    this.showRandomQuote();
   },
 
   /* ---------- Settings Panel ---------- */
