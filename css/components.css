@@ -877,6 +877,39 @@
 .bg-option-preview--studio {
   background: linear-gradient(135deg, #0f1322, #070910);
 }
+.bg-option-preview--matrix {
+  background: #020b05;
+}
+.bg-preview-matrix {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent, rgba(52, 211, 153, 0.25));
+}
+.bg-option-preview--bubbles {
+  background: linear-gradient(to bottom, #031120, #010810);
+}
+.bg-preview-bubbles {
+  position: absolute;
+  bottom: 20%;
+  left: 40%;
+  width: 6px;
+  height: 6px;
+  border: 1px solid rgba(14, 165, 233, 0.4);
+  border-radius: 50%;
+}
+.bg-option-preview--fireflies {
+  background: linear-gradient(135deg, #09120b, #040905);
+}
+.bg-preview-fireflies {
+  position: absolute;
+  bottom: 30%;
+  left: 45%;
+  width: 4px;
+  height: 4px;
+  background: #fbbf24;
+  border-radius: 50%;
+  box-shadow: 0 0 6px #f59e0b;
+}
 
 /* Light mode overrides for preview elements */
 [data-theme="light"] .bg-option-preview--aurora { background: #f0f3fa; }
@@ -889,6 +922,11 @@
 [data-theme="light"] .bg-option-preview--sakura { background: linear-gradient(135deg, #faedf3, #f0dae6); }
 [data-theme="light"] .bg-option-preview--forest { background: linear-gradient(135deg, #e6f7ec, #cbeed7); }
 [data-theme="light"] .bg-option-preview--studio { background: linear-gradient(135deg, #f4f6fb, #e5e9f3); }
+[data-theme="light"] .bg-option-preview--matrix { background: #edf7ee; }
+[data-theme="light"] .bg-preview-matrix { background: linear-gradient(180deg, transparent, rgba(16, 185, 129, 0.15)); }
+[data-theme="light"] .bg-option-preview--bubbles { background: linear-gradient(to bottom, #e6f3ff, #d4eaff); }
+[data-theme="light"] .bg-option-preview--fireflies { background: linear-gradient(135deg, #f0f7f2, #e5ede7); }
+
 
 /* ---------- Dark/Light Mode Selector ---------- */
 .appearance-toggle {

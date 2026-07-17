@@ -247,7 +247,10 @@ const App = {
       rain: 'bgRain',
       sakura: 'bgSakura',
       forest: 'bgForest',
-      studio: 'bgStudio'
+      studio: 'bgStudio',
+      matrix: 'bgMatrix',
+      bubbles: 'bgBubbles',
+      fireflies: 'bgFireflies'
     };
     Object.entries(names).forEach(([key, tKey]) => {
       const el = document.getElementById(`bgName${key.charAt(0).toUpperCase() + key.slice(1)}`);
@@ -350,7 +353,7 @@ const App = {
     if (!canvas) return;
 
     const bg = this.settings.background;
-    if (bg !== 'rain' && bg !== 'sakura') {
+    if (bg !== 'rain' && bg !== 'sakura' && bg !== 'matrix' && bg !== 'bubbles' && bg !== 'fireflies') {
       // Clear canvas and do nothing else
       const ctx = canvas.getContext('2d');
       if (ctx) ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -369,7 +372,12 @@ const App = {
     window.addEventListener('resize', resizeCanvas);
 
     // Create particles based on background
-    const particleCount = bg === 'rain' ? 120 : 40;
+    let particleCount = 40;
+    if (bg === 'rain') particleCount = 120;
+    else if (bg === 'matrix') particleCount = 80;
+    else if (bg === 'bubbles') particleCount = 35;
+    else if (bg === 'fireflies') particleCount = 25;
+
     for (let i = 0; i < particleCount; i++) {
       this.particles.push(this.createParticle(bg, true));
     }
@@ -388,6 +396,10 @@ const App = {
       if (bg === 'rain') {
         // Rain trail effect using translucent background fill
         ctx.fillStyle = this.settings.theme === 'dark' ? 'rgba(10, 14, 26, 0.25)' : 'rgba(244, 246, 251, 0.25)';
+        ctx.fillRect(0, 0, w, h);
+      } else if (bg === 'matrix') {
+        // Matrix trail effect
+        ctx.fillStyle = this.settings.theme === 'dark' ? 'rgba(2, 7, 3, 0.08)' : 'rgba(241, 248, 242, 0.08)';
         ctx.fillRect(0, 0, w, h);
       } else {
         ctx.clearRect(0, 0, w, h);
@@ -428,7 +440,44 @@ const App = {
         angle: Math.random() * 360,
         spin: -1 + Math.random() * 2
       };
+    } else if (type === 'matrix') {
+      const fontSize = 16;
+      const col = Math.floor(Math.random() * Math.max(1, Math.floor(w / fontSize)));
+      return {
+        x: col * fontSize,
+        y: initRandomY ? Math.random() * h : -fontSize,
+        speed: 1.5 + Math.random() * 3.5,
+        fontSize: fontSize,
+        char: this.getRandomMatrixChar()
+      };
+    } else if (type === 'bubbles') {
+      return {
+        x: Math.random() * w,
+        y: initRandomY ? Math.random() * h : h + 20,
+        size: 2 + Math.random() * 8,
+        speedY: -(0.4 + Math.random() * 1.2),
+        wobble: Math.random() * 100,
+        wobbleSpeed: 0.01 + Math.random() * 0.02,
+        opacity: 0.1 + Math.random() * 0.35
+      };
+    } else if (type === 'fireflies') {
+      return {
+        x: Math.random() * w,
+        y: Math.random() * h,
+        size: 1.2 + Math.random() * 2.5,
+        speedX: -0.25 + Math.random() * 0.5,
+        speedY: -0.25 + Math.random() * 0.5,
+        opacity: Math.random() * 0.7,
+        fadeDirection: Math.random() > 0.5 ? 1 : -1,
+        fadeSpeed: 0.003 + Math.random() * 0.008,
+        colorHue: 50 + Math.random() * 15
+      };
     }
+  },
+
+  getRandomMatrixChar() {
+    const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ$#@%&*+-/=<>';
+    return chars[Math.floor(Math.random() * chars.length)];
   },
 
   updateAndDrawParticle(p, ctx, w, h) {
@@ -485,6 +534,84 @@ const App = {
       if (p.y > h || p.x < -20 || p.x > w + 20) {
         Object.assign(p, this.createParticle('sakura', false));
       }
+    } else if (bg === 'matrix') {
+      // Draw falling Matrix character
+      ctx.font = `${p.fontSize}px 'JetBrains Mono', monospace`;
+      
+      const themeHue = COLOR_THEMES[this.settings.color]?.primary || 210;
+      const isHead = Math.random() > 0.96;
+      ctx.fillStyle = isHead 
+        ? '#ffffff' 
+        : `hsla(${themeHue}, 80%, 55%, ${p.y < h * 0.2 ? 0.3 + (p.y / (h * 0.2)) * 0.5 : 0.8})`;
+      
+      ctx.fillText(p.char, p.x, p.y);
+
+      if (Math.random() > 0.85) {
+        p.char = this.getRandomMatrixChar();
+      }
+
+      p.y += p.speed;
+
+      if (p.y > h + p.fontSize) {
+        Object.assign(p, this.createParticle('matrix', false));
+      }
+    } else if (bg === 'bubbles') {
+      // Draw Bubble
+      ctx.beginPath();
+      const themeHue = COLOR_THEMES[this.settings.color]?.accent || 190;
+      ctx.strokeStyle = `hsla(${themeHue}, 80%, 70%, ${p.opacity})`;
+      ctx.lineWidth = 1;
+      ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.fillStyle = `rgba(255, 255, 255, ${p.opacity * 0.6})`;
+      ctx.arc(p.x - p.size * 0.3, p.y - p.size * 0.3, p.size * 0.2, 0, Math.PI * 2);
+      ctx.fill();
+
+      p.y += p.speedY;
+      p.wobble += p.wobbleSpeed;
+      p.x += Math.sin(p.wobble) * 0.25;
+
+      if (p.y < -20 || p.x < -20 || p.x > w + 20) {
+        Object.assign(p, this.createParticle('bubbles', false));
+      }
+    } else if (bg === 'fireflies') {
+      // Draw Firefly
+      ctx.save();
+      ctx.beginPath();
+      const glowGrad = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.size * 3.5);
+      glowGrad.addColorStop(0, `hsla(${p.colorHue}, 100%, 70%, ${p.opacity})`);
+      glowGrad.addColorStop(0.3, `hsla(${p.colorHue}, 100%, 60%, ${p.opacity * 0.4})`);
+      glowGrad.addColorStop(1, `hsla(${p.colorHue}, 100%, 50%, 0)`);
+      ctx.fillStyle = glowGrad;
+      ctx.arc(p.x, p.y, p.size * 3.5, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.beginPath();
+      ctx.fillStyle = `hsla(${p.colorHue}, 100%, 90%, ${p.opacity})`;
+      ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+
+      p.x += p.speedX + Math.sin(p.y / 25) * 0.15;
+      p.y += p.speedY + Math.cos(p.x / 25) * 0.15;
+
+      p.opacity += p.fadeSpeed * p.fadeDirection;
+      if (p.opacity >= 0.75) {
+        p.fadeDirection = -1;
+      } else if (p.opacity <= 0.02) {
+        p.fadeDirection = 1;
+        p.x = Math.random() * w;
+        p.y = Math.random() * h;
+        p.speedX = -0.25 + Math.random() * 0.5;
+        p.speedY = -0.25 + Math.random() * 0.5;
+      }
+
+      if (p.x < -10) p.x = w + 10;
+      if (p.x > w + 10) p.x = -10;
+      if (p.y < -10) p.y = h + 10;
+      if (p.y > h + 10) p.y = -10;
     }
   },
 

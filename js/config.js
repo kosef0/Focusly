@@ -23,5 +23,8 @@ const BACKGROUND_OPTIONS = [
   { id: 'rain', icon: '🌧️' },
   { id: 'sakura', icon: '🌸' },
   { id: 'forest', icon: '🌲' },
-  { id: 'studio', icon: '🖥️' }
+  { id: 'studio', icon: '🖥️' },
+  { id: 'matrix', icon: '📟' },
+  { id: 'bubbles', icon: '🫧' },
+  { id: 'fireflies', icon: '✨' }
 ];

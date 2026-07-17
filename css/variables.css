@@ -438,6 +438,60 @@ body {
   background: linear-gradient(135deg, #f5f6fc, #eceef6) !important;
 }
 
+/* Matrix Digital Rain Background */
+[data-bg="matrix"] {
+  background: #020703 !important;
+}
+
+[data-theme="light"][data-bg="matrix"] {
+  background: #f1f8f2 !important;
+}
+
+[data-bg="matrix"] .bg-canvas {
+  display: block;
+  opacity: 0.9;
+}
+
+[data-theme="light"][data-bg="matrix"] .bg-canvas {
+  opacity: 0.55;
+}
+
+/* Aqua Bubbles Background */
+[data-bg="bubbles"] {
+  background: linear-gradient(135deg, #020d18, #01060b, #041424) !important;
+}
+
+[data-theme="light"][data-bg="bubbles"] {
+  background: linear-gradient(135deg, #eaf2fb, #dbe8f7, #e4eefb) !important;
+}
+
+[data-bg="bubbles"] .bg-canvas {
+  display: block;
+  opacity: 1;
+}
+
+[data-theme="light"][data-bg="bubbles"] .bg-canvas {
+  opacity: 0.75;
+}
+
+/* Magic Fireflies Background */
+[data-bg="fireflies"] {
+  background: linear-gradient(135deg, #060d07, #020603, #09130a) !important;
+}
+
+[data-theme="light"][data-bg="fireflies"] {
+  background: linear-gradient(135deg, #eff6f0, #e2ebd6, #eaf1e7) !important;
+}
+
+[data-bg="fireflies"] .bg-canvas {
+  display: block;
+  opacity: 1;
+}
+
+[data-theme="light"][data-bg="fireflies"] .bg-canvas {
+  opacity: 0.8;
+}
+
 /* Light theme: nebula clouds softer to not darken text area */
 [data-theme="light"] .bg-nebula-cloud {
   opacity: 0.07;
