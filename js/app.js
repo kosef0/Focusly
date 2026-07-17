@@ -753,6 +753,7 @@ const App = {
     this.state.status = 'running';
     this.state.startedAt = Date.now();
     this.state.startedWithRemaining = this.state.timeRemaining;
+    this.state._lastTickSecond = null;
     this.updateStartButtonText();
     this.els.timerRing?.classList.add('timer-ring--running');
 
@@ -773,6 +774,7 @@ const App = {
   resetTimer() {
     this.pauseTimer();
     this.state.status = 'idle';
+    this.state._lastTickSecond = null;
     const modeMinutes = this.getModeMinutes(this.state.mode);
     this.state.totalTime = modeMinutes * 60;
     this.state.timeRemaining = this.state.totalTime;
@@ -797,7 +799,17 @@ const App = {
     this.updateProgress();
     this.updateTitle();
 
+    // Countdown tick-tock in the last 5 seconds
+    if (this.settings.sound && this.state.timeRemaining > 0 && this.state.timeRemaining <= 5.5) {
+      const secondsLeft = Math.ceil(this.state.timeRemaining);
+      if (secondsLeft >= 1 && secondsLeft <= 5 && secondsLeft !== this.state._lastTickSecond) {
+        this.state._lastTickSecond = secondsLeft;
+        this.sound?.playCountdownTick(secondsLeft);
+      }
+    }
+
     if (this.state.timeRemaining <= 0) {
+      this.state._lastTickSecond = null;
       this.onTimerComplete();
     }
   },
